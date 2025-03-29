@@ -43,3 +43,4 @@ if submit_button:
 
     else:
         st.warning("Predikce je dostupná pouze pro následujících 5 dnů.")
+st.cache_resource.clear()
