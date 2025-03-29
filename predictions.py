@@ -53,7 +53,7 @@ def predict(data):
     my_plt = plot_solar_power_prediction(y_pred_trans)
     st.pyplot(my_plt)
 
-    del x, y_pred, y_pred_trans
+    del x, y_pred, y_pred_trans, model
     keras.backend.clear_session()  # Uvolnění TensorFlow session
     gc.collect()  
 
