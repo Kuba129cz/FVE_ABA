@@ -12,31 +12,34 @@ st.title("Predikce výkonu FVE ABA")
 #st.markdown("This is **Markdown**")
 #st.caption("small text")
 
-with st.form(key="sample_form"):
-    date_utc = st.date_input("Vyber den")
-    st.form_submit_button(label="Predikuj")
-
 today = datetime.date.today()  
-previous_day = date_utc - timedelta(days=1) 
-if date_utc < today - datetime.timedelta(days=1):
-    st.header(f"Predikce pro: {date_utc}:")
+max_date = today + datetime.timedelta(days=4)
 
-    df_meteo = get_meteo_data(previous_day, date_utc)
-    df_air_quality = get_air_quality_data(previous_day, date_utc)
+with st.form(key="sample_form"):
+    date_utc = st.date_input("Vyber den", max_value=max_date)
+    submit_button = st.form_submit_button(label="Predikuj")
 
-    data = df_meteo.merge(df_air_quality, on="DT", how="inner")
-    predict(data)
+if submit_button:   
+    previous_day = date_utc - timedelta(days=1) 
+    if date_utc < today - datetime.timedelta(days=1):
+       # st.subheader(f"Predikce výkonu pro: {date_utc}:")
 
-elif previous_day < date_utc <= today + datetime.timedelta(days=4):
-    st.header(f"Data pro: {date_utc}:")
-    df_meteo = get_forecast_meteo_data(previous_day, date_utc)
-    df_air_quality = get_air_quality_forecast(previous_day, date_utc)
-    data = df_meteo.merge(df_air_quality, on="DT", how="inner")
-    #st.write("Budouci data:")
-    #st.dataframe(df_meteo)
-    #st.dataframe(df_air_quality)
-    st.dataframe(data)
-    predict(data)
+        df_meteo = get_meteo_data(previous_day, date_utc)
+        df_air_quality = get_air_quality_data(previous_day, date_utc)
 
-else:
-    st.warning("Predikce je dostupná pouze pro následujících 5 dnů.")
+        data = df_meteo.merge(df_air_quality, on="DT", how="inner")
+        predict(data)
+
+    elif previous_day < date_utc <= today + datetime.timedelta(days=4):
+       # st.header(f"Data pro: {date_utc}:")
+        df_meteo = get_forecast_meteo_data(previous_day, date_utc)
+        df_air_quality = get_air_quality_forecast(previous_day, date_utc)
+        data = df_meteo.merge(df_air_quality, on="DT", how="inner")
+        #st.write("Budouci data:")
+        #st.dataframe(df_meteo)
+        #st.dataframe(df_air_quality)
+        #st.dataframe(data)
+        predict(data)
+
+    else:
+        st.warning("Predikce je dostupná pouze pro následujících 5 dnů.")
