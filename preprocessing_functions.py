@@ -21,7 +21,7 @@ def download_model():
         else:
             st.error("Nepodařilo se stáhnout model. Zkontrolujte URL.")
 
-
+@st.cache_resource
 def load_model():
     download_model()
     model = tf.keras.models.load_model(MODEL_PATH)
