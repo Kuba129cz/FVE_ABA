@@ -4,6 +4,7 @@ import streamlit as st
 import os
 import requests
 import matplotlib.pyplot as plt
+import joblib
 
 MODEL_URL = "https://github.com/Kuba129cz/FVE_ABA/releases/download/model_FVE/output_predictions_to_meteo_smape_25.keras"
 MODEL_PATH = "model.keras"
@@ -23,11 +24,18 @@ def download_model():
     else:
         st.info("Model již je stažen.")
 
-@st.cache_resource  # To zajistí, že model je načten a uložen v cache mezi jednotlivými relacemi
+@st.cache_resource
 def load_model():
-    download_model()  # Zavoláme download_model pouze jednou, pokud není model k dispozici
+    download_model()
     model = tf.keras.models.load_model(MODEL_PATH)
     return model
+
+@st.cache_resource 
+def load_transformers():
+    input_preprocessor = joblib.load('input_preprocessor_meteo_to_smape25.pkl')
+    output_scaler = joblib.load('output_scaler_meteo_to_smape25.pkl')
+
+    return input_preprocessor, output_scaler
 
 def create_sequences(data, window, horizon, past_features, future_features):
     """

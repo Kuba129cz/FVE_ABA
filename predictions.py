@@ -3,15 +3,15 @@ import pandas as pd
 import numpy as np
 from meteo_functions import create_time_cycles
 import joblib
-from preprocessing_functions import create_sequences, plot_solar_power_prediction, load_model
+from preprocessing_functions import create_sequences, plot_solar_power_prediction, load_model, load_transformers
 from tensorflow import keras
 
 def predict(data):
     data = create_time_cycles(data)
     st.divider()
+
     # Načtění transformátorů
-    input_preprocessor = joblib.load('input_preprocessor_meteo_to_smape25.pkl')
-    output_scaler = joblib.load('output_scaler_meteo_to_smape25.pkl')
+    input_preprocessor, output_scaler = load_transformers()
 
     # transformace vstupnich prom
     X_dataset = input_preprocessor.transform(data)
