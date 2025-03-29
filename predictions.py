@@ -5,6 +5,7 @@ from meteo_functions import create_time_cycles
 import joblib
 from preprocessing_functions import create_sequences, plot_solar_power_prediction, load_model, load_transformers
 from tensorflow import keras
+import gc
 
 def predict(data):
     data = create_time_cycles(data)
@@ -47,9 +48,13 @@ def predict(data):
 
     y_pred_trans[y_pred_trans < 1] = 0
     st.write("**Predikované hodnoty výkonu (kW) pro jednotlivé hodiny:**")
-    st.write(y_pred_trans)
+    st.write(y_pred_trans, use_container_width=True)
 
     my_plt = plot_solar_power_prediction(y_pred_trans)
     st.pyplot(my_plt)
+
+    del x, y_pred, y_pred_trans
+    keras.backend.clear_session()  # Uvolnění TensorFlow session
+    gc.collect()  
 
     return None
