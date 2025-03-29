@@ -5,11 +5,6 @@ import os
 import requests
 import matplotlib.pyplot as plt
 
-import os
-import requests
-import tensorflow as tf
-import streamlit as st
-
 MODEL_URL = "https://github.com/Kuba129cz/FVE_ABA/releases/download/model_FVE/output_predictions_to_meteo_smape_25.keras"
 MODEL_PATH = "model.keras"
 
