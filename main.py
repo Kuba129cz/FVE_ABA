@@ -5,6 +5,10 @@ from datetime import timedelta
 import datetime
 from meteo_functions import get_meteo_data, get_air_quality_data, get_forecast_meteo_data, get_air_quality_forecast
 from predictions import predict 
+import gc
+
+def clear_memory():
+    gc.collect() 
 
 st.title("Predikce výkonu FVE ABA")
 #t.header("this is a header")
@@ -29,7 +33,7 @@ if submit_button:
 
         data = df_meteo.merge(df_air_quality, on="DT", how="inner")
         predict(data)
-        st.cache_resource.clear()
+        clear_memory()
 
     elif previous_day < date_utc <= today + datetime.timedelta(days=4):
        # st.header(f"Data pro: {date_utc}:")
@@ -41,7 +45,7 @@ if submit_button:
         #st.dataframe(df_air_quality)
         #st.dataframe(data)
         predict(data)
-        st.cache_resource.clear()
+        clear_memory()
 
     else:
         st.warning("Predikce je dostupná pouze pro následujících 5 dnů.")
