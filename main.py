@@ -67,7 +67,6 @@ features = ["RAD", "Relative_Humidity_2m", "Surface_Pressure", 'Cloud_Cover', "T
 x = create_sequences(X_dataset, window=24, horizon=24, past_features=features, future_features=features)
 
 model = load_model()
-model = keras.models.load_model('output_predictions_to_meteo_smape_25.keras')
 
 y_pred = model.predict(x) # predikce
 
