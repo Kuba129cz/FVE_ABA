@@ -29,6 +29,7 @@ if submit_button:
 
         data = df_meteo.merge(df_air_quality, on="DT", how="inner")
         predict(data)
+        st.cache_resource.clear()
 
     elif previous_day < date_utc <= today + datetime.timedelta(days=4):
        # st.header(f"Data pro: {date_utc}:")
@@ -40,7 +41,7 @@ if submit_button:
         #st.dataframe(df_air_quality)
         #st.dataframe(data)
         predict(data)
+        st.cache_resource.clear()
 
     else:
         st.warning("Predikce je dostupná pouze pro následujících 5 dnů.")
-st.cache_resource.clear()
