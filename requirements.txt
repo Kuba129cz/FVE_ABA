@@ -1,3 +1,4 @@
 tensorflow
 streamlit
 requests
+joblib
