@@ -46,6 +46,7 @@ def predict(data):
     y_pred_trans = np.array([output_scaler.inverse_transform(y_pred[:, i].reshape(-1, 1)).flatten() for i in range(y_pred.shape[1])]).T
 
     y_pred_trans[y_pred_trans < 1] = 0
+    st.write("**Predikované hodnoty výkonu (kW) pro jednotlivé hodiny:**")
     st.write(y_pred_trans)
 
     my_plt = plot_solar_power_prediction(y_pred_trans)
