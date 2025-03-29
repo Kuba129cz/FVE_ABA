@@ -4,3 +4,6 @@ numpy
 matplotlib
 tensorflow
 joblib
+requests
+scipy
+scikit-learn
