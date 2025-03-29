@@ -1,4 +1,6 @@
-tensorflow
 streamlit
-requests
+pandas
+numpy
+matplotlib
+tensorflow
 joblib
